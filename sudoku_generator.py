@@ -1,4 +1,5 @@
 import math,random
+from board import Board
 
 """
 This was adapted from a GeeksforGeeks article "Program for Sudoku Generator" by Aarti_Rathi and Ankur Trisal
@@ -22,8 +23,11 @@ class SudokuGenerator:
 	Return:
 	None
     '''
-    def __init__(self, row_length, removed_cells):
-        pass
+    def __init__(self, row_length, removed_cells)->None:
+        self.row_length = row_length
+        self.removed_cells = removed_cells
+        self.box_length = math.sqrt(self.row_length)
+        self.board = Board(self.row_length, self.row_length)
 
     '''
 	Returns a 2D python list of numbers which represents the board
