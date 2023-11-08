@@ -99,8 +99,13 @@ class SudokuGenerator:
 
 	Return: boolean
     '''
-    def is_valid(self, row, col, num):
-        pass
+    def is_valid(self, row:int, col:int, num:int)->bool:
+        #rounds off rows for box check and checks that all 3 are true
+        row_start = ((row // 3) * 3)
+        col_start = ((col // 3) * 3)
+        if self.valid_in_col(col, num) and self.valid_in_row(row, num) and self.valid_in_box(row_start, col_start, num):
+            return True
+        return False
 
     '''
     Fills the specified 3x3 box with values
