@@ -87,12 +87,9 @@ class SudokuGenerator:
 
 	Return: boolean
     '''
-    def valid_in_box(self, row_start, col_start, num):
-        for i in range(row_start, row_start+3):
-            for j in range(col_start, col_start+3):
-                if self.board.board[i][j] == num:
-                    return False
-        return True
+    def valid_in_box(self, row_start:int, col_start:int, num:int)->bool:
+        return not num in self.board.get_box(row_start, col_start)
+
     
     '''
     Determines if it is valid to enter num at (row, col) in the board
@@ -108,9 +105,10 @@ class SudokuGenerator:
         #rounds off rows for box check and checks that all 3 are true
         row_start = ((row // 3) * 3)
         col_start = ((col // 3) * 3)
-        if self.valid_in_col(col, num) and self.valid_in_row(row, num) and self.valid_in_box(row_start, col_start, num):
+        if self.valid_in_col(col, num) & self.valid_in_row(row, num) & self.valid_in_box(row_start, col_start, num):
             return True
-        return False
+        else:
+            return False
 
     '''
     Fills the specified 3x3 box with values
