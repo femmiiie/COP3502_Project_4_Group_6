@@ -58,7 +58,7 @@ class SudokuGenerator:
 	
 	Return: boolean
     '''
-    def valid_in_row(self, row, num):
+    def valid_in_row(self, row:int, num:int)->bool:
         return not num in self.board.get_row(row)
             
 
@@ -72,7 +72,7 @@ class SudokuGenerator:
 	
 	Return: boolean
     '''
-    def valid_in_col(self, col, num):
+    def valid_in_col(self, col:int, num:int)->bool:
         return not num in self.board.get_col(col)
 
     '''
