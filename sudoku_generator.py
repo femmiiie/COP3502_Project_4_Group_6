@@ -36,7 +36,7 @@ class SudokuGenerator:
 	Return: list[list]
     '''
     def get_board(self):
-        pass
+        return self.board
 
     '''
 	Displays the board to the console
@@ -46,7 +46,8 @@ class SudokuGenerator:
 	Return: None
     '''
     def print_board(self):
-        pass
+        for row in range(0, len(self.board)):
+            print(f'{self.board[row]}\n')
 
     '''
 	Determines if num is contained in the specified row (horizontal) of the board
@@ -197,7 +198,19 @@ class SudokuGenerator:
 	Return: None
     '''
     def remove_cells(self):
-        pass
+        filled_boxes = []
+        if difficulty == 'easy':
+            removed_cells = 30
+        elif difficulty == 'medium':
+            removed_cells = 40
+        elif difficulty == 'hard':
+            removed_cells = 50
+        for i in range(0, removed_cells):
+            rand_box = (random.randint(0, 8), random.randint(0, 8))
+            while rand_box in filled_boxes:
+                rand_box = (random.randint(0, 8), random.randint(0, 8))
+            filled_boxes.append(rand_box)
+            self.board[rand_box[0]][rand_box[1]] = 0
 
 '''
 DO NOT CHANGE
