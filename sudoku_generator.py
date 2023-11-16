@@ -36,6 +36,7 @@ class SudokuGenerator:
 	Return: list[list]
     '''
     def get_board(self):
+        #this wont work it'll just return a reference to the board object
         return self.board
 
     '''
@@ -199,6 +200,7 @@ class SudokuGenerator:
     '''
     def remove_cells(self):
         filled_boxes = []
+        #you can just use self.removed_cells
         if difficulty == 'easy':
             removed_cells = 30
         elif difficulty == 'medium':
