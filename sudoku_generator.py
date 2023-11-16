@@ -36,8 +36,10 @@ class SudokuGenerator:
 	Return: list[list]
     '''
     def get_board(self):
-        #this wont work it'll just return a reference to the board object
-        return self.board
+        board_list = []
+        for rows in self.board:
+            board_list.append(rows)
+        return board_list
 
     '''
 	Displays the board to the console
