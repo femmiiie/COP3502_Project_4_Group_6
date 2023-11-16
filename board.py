@@ -20,12 +20,14 @@ class Board:
                 value_list.append(i.get_cell_value())
         return  value_list
 
+
     #Get values from specified col as ints
     def get_col(self, num:int)->list[int]:
         value_list = []
         for i in range(len(self.board)):
             value_list.append(self.board[i][num].get_cell_value())
         return value_list
+
 
     #Gets value from specified box as int list in reading order
     def get_box(self, row_start:int, col_start:int)->list[int]:
