@@ -197,14 +197,9 @@ class SudokuGenerator:
 	Parameters: None
 	Return: None
     '''
-    def remove_cells(self):
+    def remove_cells(self, num_cells):
         filled_boxes = []
-        if difficulty == 'easy':
-            removed_cells = 30
-        elif difficulty == 'medium':
-            removed_cells = 40
-        elif difficulty == 'hard':
-            removed_cells = 50
+        removed_cells = num_cells
         for i in range(0, removed_cells):
             rand_box = (random.randint(0, 8), random.randint(0, 8))
             while rand_box in filled_boxes:
