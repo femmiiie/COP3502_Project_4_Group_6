@@ -46,7 +46,7 @@ class SudokuGenerator:
 	Return: None
     '''
     def print_board(self):
-        for row in range(0, len(self.board)):
+        for row in range(0, len(self.board), -1):
             print(f'{self.board[row]}\n')
 
     '''
