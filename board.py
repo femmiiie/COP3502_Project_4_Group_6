@@ -7,8 +7,91 @@ class Board:
         self.board_initialize()
 
 
+    def __init__(self, width, height, screen, difficulty):
+        self.width = width
+        self.height = height
+        self.screen = screen
+        self.difficulty = difficulty
+        self.cells = [[Cell() for _ in range(width)] for _ in range(height)]
+        self.selected_cell = None
 
 
+    def draw(self):
+        cell_size = 50
+        bold_line_width = 3
+        normal_line_width = 1
+        margin = 10
+
+        for i in range(self.width + 1):
+            if i % 3 == 0:
+                line_width = bold_line_width
+            else:
+                line_width = normal_line_width
+
+            pygame.draw.line(self.screen, (0, 0, 0), (margin + i * cell_size, margin),
+                             (margin + i * cell_size, margin + self.height * cell_size), line_width)
+
+        for j in range(self.height + 1):
+            if j % 3 == 0:
+                line_width = bold_line_width
+            else:
+                line_width = normal_line_width
+
+            pygame.draw.line(self.screen, (0, 0, 0), (margin, margin + j * cell_size),
+                             (margin + self.width * cell_size, margin + j * cell_size), line_width)
+            
+        for i in range(self.width):
+            for j in range(self.height):
+                cell = self.cells[i][j]
+                cell_rect = pygame.Rect(margin + i * cell_size, margin + j * cell_size, cell_size, cell_size)
+
+                if cell.original:
+                    pygame.draw.rect(self.screen, (200, 200, 200), cell_rect)
+                else:
+                    pygame.draw.rect(self.screen, (255, 255, 255), cell_rect)
+
+                if cell.value != 0:
+                    font = pygame.font.Font(None, 36)
+                    text = font.render(str(cell.value), True, (0, 0, 0))
+                    text_rect = text.get_rect(center=cell_rect.center)
+                    self.screen.blit(text, text_rect)
+
+                # Draw sketch if available
+                if cell.sketch:
+                    sketch_font = pygame.font.Font(None, 18)
+                    sketch_text = sketch_font.render(str(cell.sketch), True, (150, 150, 150))
+                    sketch_text_rect = sketch_text.get_rect(topleft=(cell_rect.left + 5, cell_rect.top + 5))
+                    self.screen.blit(sketch_text, sketch_text_rect)
+
+        pygame.display.flip()
+            
+    #Marks boards
+    def select(self, row, col):
+        self.selected_cell = (row, col)
+
+    #Clicks or returns none
+    def click(self, x, y):
+        cell_size = 50
+        margin = 10
+
+        if margin <= x <= margin + self.width * cell_size and margin <= y <= margin + self.height * cell_size:
+            row = (x - margin) // cell_size
+            col = (y - margin) // cell_size
+            return int(row), int(col)
+        else:
+            return None
+    
+    #Clears the cells
+    def clear(self):
+        if self.selected_cell:
+            row, col = self.selected_cell
+            self.cells[row][col].value = 0
+
+    #Sketches the cells
+    def sketch(self, value):
+        if self.selected_cell:
+            row, col = self.selected_cell
+            self.cells[row][col].sketch = value
 
     '''GETTERS FOR VALIDATION METHODS'''
     #Gets values from specified row as ints
