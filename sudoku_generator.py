@@ -198,9 +198,9 @@ class SudokuGenerator:
 	Parameters: None
 	Return: None
     '''
-    def remove_cells(self, num_cells):
+    def remove_cells(self):
         filled_boxes = []
-        for i in range(0, num_cells):
+        for i in range(0, self.removed_cells):
             rand_box = (random.randint(0, 8), random.randint(0, 8))
             while rand_box in filled_boxes:
                 rand_box = (random.randint(0, 8), random.randint(0, 8))
