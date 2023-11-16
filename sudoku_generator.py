@@ -47,7 +47,7 @@ class SudokuGenerator:
 	Return: None
     '''
     def print_board(self):
-        for row in range(0, len(self.board)):
+        for row in range(0, len(self.board), -1):
             print(f'{self.board[row]}\n')
 
     '''
@@ -198,15 +198,9 @@ class SudokuGenerator:
 	Parameters: None
 	Return: None
     '''
-    def remove_cells(self):
+    def remove_cells(self, num_cells):
         filled_boxes = []
-        #you can just use self.removed_cells
-        if difficulty == 'easy':
-            removed_cells = 30
-        elif difficulty == 'medium':
-            removed_cells = 40
-        elif difficulty == 'hard':
-            removed_cells = 50
+        removed_cells = num_cells
         for i in range(0, removed_cells):
             rand_box = (random.randint(0, 8), random.randint(0, 8))
             while rand_box in filled_boxes:
