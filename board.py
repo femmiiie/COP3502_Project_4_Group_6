@@ -124,7 +124,7 @@ class Board:
 
     # Sets the value of the current selected cell equal to user entered value.
     def place_number(self, value):
-    self.selected_cell = value
+        self.selected_cell = value
 
     
     # Reset all cells in the board to their original values (0 if cleared, otherwise the corresponding digit).
