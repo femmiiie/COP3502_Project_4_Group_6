@@ -1,11 +1,6 @@
 from cell import Cell
 
 class Board:
-    def __init__(self):
-        self.board : list[list[Cell]] = []
-        self.selected : tuple[int] = (0, 0)
-        self.board_initialize()
-
 
     def __init__(self, width, height):
         self.width = width
