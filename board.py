@@ -124,6 +124,23 @@ class Board:
                     value_list.append(self.board[i][j].get_cell_value())
         return  value_list
 
+    # Sets the value of the current selected cell equal to user entered value.
+    def place_number(self, value):
+    self.selected_cell = value
+
+    
+    # Reset all cells in the board to their original values (0 if cleared, otherwise the corresponding digit).
+    def reset_to_original(self):
+        pass
+
+    # Returns a Boolean value indicating whether the board is full or not.
+    def is_full(self):
+        for r in range(0, 9):
+            for c in range(0, 9):
+                if self.board[r][c].get_cell_value() == 0:
+                    return False
+        return True
+
     # Check row, col, and box function make sure that each number is found in each. Combined in check_board
 
     def check_row(self):
