@@ -121,4 +121,71 @@ class Board:
                 else:
                     value_list.append(self.board[i][j].get_cell_value())
         return  value_list
+
+    # Sets the value of the current selected cell equal to user entered value.
+    def place_number(self, value):
+    self.selected_cell = value
+
+    
+    # Reset all cells in the board to their original values (0 if cleared, otherwise the corresponding digit).
+    def reset_to_original(self):
+        pass
+
+    # Returns a Boolean value indicating whether the board is full or not.
+    def is_full(self):
+        for r in range(0, 9):
+            for c in range(0, 9):
+                if self.board[r][c].get_cell_value() == 0:
+                    return False
+        return True
+
+    # Check row, col, and box function make sure that each number is found in each. Combined in check_board
+
+    def check_row(self):
+        solved_rows = 0
+        for i in range(0, 9):
+            found_nums = 0
+            for num in [1, 2, 3, 4, 5, 6, 7, 8, 9]:
+                if num in set(self.get_row(i)):
+                    found_nums += 1
+            if found_nums == 9:
+                solved_rows += 1
+        if solved_rows == 9:
+            return True
+        else:
+            return False
+
+    def check_col(self):
+        solved_cols = 0
+        for i in range(0, 9):
+            found_nums = 0
+            for num in [1, 2, 3, 4, 5, 6, 7, 8, 9]:
+                if num in set(self.get_col(i)):
+                    found_nums += 1
+            if found_nums == 9:
+                solved_cols += 1
+        if solved_cols == 9:
+            return True
+        else:
+            return False
+
+    def check_box(self):
+        solved_boxes = 0
+        for r in range(0, 3):
+            for c in range(0, 3):
+                found_nums = 0
+                for num in [1, 2, 3, 4, 5, 6, 7, 8, 9]:
+                    if num in set(self.get_box(r, c)):
+                        found_nums += 1
+                if found_nums == 9:
+                    solved_boxes += 1
+        if solved_boxes == 9:
+            return True
+        else:
+            return False
+
+    def check_board(self):
+        if self.check_box and self.check_row and self.check_col:
+            return True
+        return False
         
