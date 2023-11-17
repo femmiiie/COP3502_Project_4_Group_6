@@ -7,13 +7,11 @@ class Board:
         self.board_initialize()
 
 
-    def __init__(self, width, height, screen, difficulty):
+    def __init__(self, width, height):
         self.width = width
         self.height = height
-        self.screen = screen
-        self.difficulty = difficulty
-        self.cells = [[Cell() for _ in range(width)] for _ in range(height)]
-        self.selected_cell = None
+        self.board = [[Cell(0, i, j) for i in range(width)] for j in range(height)]
+        self.selected_cell = (0, 0)
 
 
     def draw(self):
