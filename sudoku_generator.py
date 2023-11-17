@@ -1,6 +1,7 @@
 import math,random
 from board import Board
 
+
 """
 This was adapted from a GeeksforGeeks article "Program for Sudoku Generator" by Aarti_Rathi and Ankur Trisal
 https://www.geeksforgeeks.org/program-sudoku-generator/
@@ -37,8 +38,8 @@ class SudokuGenerator:
     '''
     def get_board(self):
         board_list = []
-        for rows in self.board:
-            board_list.append(rows)
+        for i in range(len(self.board.board)):
+            board_list.append(self.board.get_row(i))
         return board_list
 
     '''
@@ -49,8 +50,8 @@ class SudokuGenerator:
 	Return: None
     '''
     def print_board(self):
-        for row in range(0, len(self.board), -1):
-            print(f'{self.board[row]}\n')
+        for row in self.get_board():
+            print(row)
 
     '''
 	Determines if num is contained in the specified row (horizontal) of the board
