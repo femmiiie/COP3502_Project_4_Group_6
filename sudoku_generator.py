@@ -27,7 +27,7 @@ class SudokuGenerator:
     def __init__(self, row_length, removed_cells)->None:
         self.row_length = row_length
         self.removed_cells = removed_cells
-        self.box_length = math.sqrt(self.row_length)
+        self.box_length = int(math.sqrt(self.row_length))
         self.board = Board(self.row_length, self.row_length)
 
     '''
@@ -51,9 +51,8 @@ class SudokuGenerator:
     '''
     
     def print_board(self):
-	    printed_board = self.get_board()
-            for row in range(0, len(printed_board), -1):
-                print(printed_board[row])
+	    for row in self.get_board():
+             print(row)
 
     '''
 	Determines if num is contained in the specified row (horizontal) of the board
@@ -127,20 +126,17 @@ class SudokuGenerator:
 
 	Return: None
     '''
-    def fill_box(self, row_start, col_start):
-        if not isinstance(row_start, int) and not isinstance(col_start, int):
-            return False
-        row_start -= row_start % 3
-        col_start -= col_start % 3
+    def fill_box(self, row_start: int, col_start: int):
+        num = 0
         for row in range(row_start, row_start + 3):
             for col in range(col_start, col_start + 3):
-                if self.board[row][col] != 0:
+                if self.board.board[row][col].get_cell_value() != 0:
                     continue
                 while True:
                     num = random.randint(1, 9)
                     if self.is_valid(row, col, num):
                         break
-                self.board[row][col] = num
+                self.board.board[row][col].set_cell_value(num)
 
 
     
@@ -188,10 +184,10 @@ class SudokuGenerator:
         
         for num in range(1, self.row_length + 1):
             if self.is_valid(row, col, num):
-                self.board[row][col] = num
+                self.board.board[row][col] = num
                 if self.fill_remaining(row, col + 1):
                     return True
-                self.board[row][col] = 0
+                self.board.board[row][col] = 0
         return False
 
     '''
@@ -204,7 +200,8 @@ class SudokuGenerator:
     '''
     def fill_values(self):
         self.fill_diagonal()
-        self.fill_remaining(0, self.box_length)
+        self.print_board()
+        #self.fill_remaining(0, self.box_length)
 
     '''
     Removes the appropriate number of cells from the board
