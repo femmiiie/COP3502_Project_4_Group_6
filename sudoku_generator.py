@@ -200,8 +200,7 @@ class SudokuGenerator:
     '''
     def fill_values(self):
         self.fill_diagonal()
-        self.print_board()
-        #self.fill_remaining(0, self.box_length)
+        self.fill_remaining(0, self.box_length)
 
     '''
     Removes the appropriate number of cells from the board
