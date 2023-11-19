@@ -163,7 +163,7 @@ class SudokuGenerator:
 	Return:
 	boolean (whether or not we could solve the board)
     '''
-    def fill_remaining(self, row, col):
+    def fill_remaining(self, row:int, col:int):
         if (col >= self.row_length and row < self.row_length - 1):
             row += 1
             col = 0
@@ -184,10 +184,10 @@ class SudokuGenerator:
         
         for num in range(1, self.row_length + 1):
             if self.is_valid(row, col, num):
-                self.board.board[row][col] = num
+                self.board.board[row][col].set_cell_value(num)
                 if self.fill_remaining(row, col + 1):
                     return True
-                self.board.board[row][col] = 0
+                self.board.board[row][col].set_cell_value(0)
         return False
 
     '''
