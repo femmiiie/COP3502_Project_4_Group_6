@@ -49,10 +49,11 @@ class SudokuGenerator:
 	Parameters: None
 	Return: None
     '''
+    
     def print_board(self):
-	printed_board = self.get_board()
-        for row in range(0, len(printed_board), -1):
-            print(printed_board[row])
+	    printed_board = self.get_board()
+            for row in range(0, len(printed_board), -1):
+                print(printed_board[row])
 
     '''
 	Determines if num is contained in the specified row (horizontal) of the board
@@ -127,12 +128,21 @@ class SudokuGenerator:
 	Return: None
     '''
     def fill_box(self, row_start, col_start):
-        unused_nums = self.unused_in_box(row_start, col_start)
-        random.shuffle(unused_nums)
-        for i in range(row_start, row_start + 3):
-            for j in range(col_start, col_start + 3):
-                if self.board[i][j] == 0:
-                    self.board[i][j] = unused_nums.pop()
+        if not isinstance(row_start, int) and not isinstance(col_start, int):
+            return False
+        row_start -= row_start % 3
+        col_start -= col_start % 3
+        for row in range(row_start, row_start + 3):
+            for col in range(col_start, col_start + 3):
+                if self.board[row][col] != 0:
+                    continue
+                while True:
+                    num = random.randint(1, 9)
+                    if self.is_valid(row, col, num):
+                        break
+                self.board[row][col] = num
+
+
     
     '''
     Fills the three boxes along the main diagonal of the board
