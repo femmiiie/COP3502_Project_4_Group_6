@@ -221,7 +221,7 @@ class SudokuGenerator:
             while rand_box in filled_boxes:
                 rand_box = (random.randint(0, 8), random.randint(0, 8))
             filled_boxes.append(rand_box)
-            self.board[rand_box[0]][rand_box[1]] = 0
+            self.board.board[rand_box[0]][rand_box[1]].set_cell_value(0)
 
 '''
 DO NOT CHANGE
