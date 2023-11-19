@@ -8,7 +8,7 @@ class Board:
         self.board = [[Cell(0, i, j) for i in range(width)] for j in range(height)]
         self.selected_cell = (0, 0)
 
-
+    # Draws the board
     def draw(self):
         cell_size = 50
         bold_line_width = 3
