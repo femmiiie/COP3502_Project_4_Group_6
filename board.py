@@ -134,6 +134,13 @@ class Board:
                     return False
         return True
 
+    # Finds the first empty cell and returns as tuple
+    def find_empty(self):
+        for r in range(0, 9):
+            for c in range(0, 9):
+                if self.board[r][c].get_cell_value() == 0:
+                    return r, c
+
     # Check row, col, and box function make sure that each number is found in each. Combined in check_board
 
     def check_row(self):
