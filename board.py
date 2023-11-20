@@ -7,6 +7,7 @@ class Board:
         self.height = height
         self.board = [[Cell(0, i, j) for i in range(width)] for j in range(height)]
         self.selected_cell = (0, 0)
+        self.original_board = self.board
 
     # Draws the board
     def draw(self):
@@ -121,10 +122,9 @@ class Board:
     def place_number(self, value):
         self.board[self.selected_cell[0]][self.selected_cell[1]].set_sketched_value(value)
 
-    
-    # Reset all cells in the board to their original values (0 if cleared, otherwise the corresponding digit).
+    # Reset all cells in the board to their original values.
     def reset_to_original(self):
-        pass
+        self.board = self.original_board
 
     # Returns a Boolean value indicating whether the board is full or not.
     def is_full(self):
