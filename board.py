@@ -9,6 +9,7 @@ class Board:
         self.selected_cell = (0, 0)
         self.original_board = self.board
 
+
     # Draws the board
     def draw(self):
         cell_size = 50
@@ -124,7 +125,9 @@ class Board:
 
     # Reset all cells in the board to their original values.
     def reset_to_original(self):
-        self.board = self.original_board
+        for i in self.board:
+            for j in i:
+                j.set_sketched_value(0)
 
     # Returns a Boolean value indicating whether the board is full or not.
     def is_full(self):
