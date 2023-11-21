@@ -1,3 +1,11 @@
+
+#TODOS:
+#add location and size parameters to cell (and board?) class
+#   would make it easier to address sizes of specific cell when drawing
+#create all buttons and both menus
+#   i have rendering functions for both started, may have to be renamed since we will prob do input/game handling in it too
+
+
 #IMPORTS
 import pygame
 from sudoku_generator import SudokuGenerator
@@ -33,18 +41,19 @@ if __name__ == "__main__":
     pygame.init()
     screen = pygame.display.set_mode((WINDOW_LENGTH, WINDOW_HEIGHT))
     clock = pygame.time.Clock()
-    
+    current_event:int
 
     #Main Game Loop
     while running:
         mouse_pos = pygame.mouse.get_pos()
+        
 
         for event in pygame.event.get():
             print(event.type)
             if event.type == pygame.QUIT:
                 running = False
-            elif event.type == pygame.MOUSEBUTTONUP:
-                in_menu = not in_menu
+            else:
+                current_event = event.type
 
         if in_menu:
             render_menu(screen)
@@ -55,3 +64,5 @@ if __name__ == "__main__":
         
         
         pygame.display.flip()
+
+
