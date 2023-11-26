@@ -7,38 +7,57 @@
 
 
 #IMPORTS
+#double import for type casting
 import pygame
+from pygame import *
 from sudoku_generator import SudokuGenerator
 
+pygame.init()
 
 #CONSTANTS
 WINDOW_HEIGHT = 720
+WINDOW_HEIGHT_CENTER = WINDOW_HEIGHT/2
 WINDOW_LENGTH = 1280
+WINDOW_LENGTH_CENTER = WINDOW_LENGTH/2
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
+DEFAULT_FONT = pygame.font.Font(None, 50)
 
 
 #GLOBAL FLAGS
 running = True
 in_menu = True
 
+#Currently only accounts for text centering
+#Will try to do button centering soon
+def draw_button(screen:Surface, left_edge:int, top_edge:int, border:int, text:str, text_color:tuple, background_color:tuple):
+    text_object = DEFAULT_FONT.render(text, 0, text_color)
+    sizes = (text_object.get_width() + border, text_object.get_height() + border)
+    positions = (left_edge - (border//2), top_edge - (border//2))
+    coords = pygame.Rect(positions[0], positions[1], sizes[0], sizes[1])
+
+    pygame.draw.rect(screen, background_color, coords)
+    screen.blit(text_object, (left_edge, top_edge))
+
+    return coords
+        
 
 #Renders all Main Menu Elements, Buttons, Etc.
-def render_menu(screen):
+def render_menu(screen:Surface):
     screen.fill('blue')
-    text = pygame.font.Font(None, 100)
-    textObj = text.render("Testing 123", 0, (255,255,255))
-    screen.blit(textObj, (WINDOW_LENGTH/2, WINDOW_HEIGHT/2))
+
+    easy_location = draw_button(screen, WINDOW_LENGTH_CENTER - 200, 500, 10, 'EASY', WHITE, BLACK)
+    medium_location = draw_button(screen, WINDOW_LENGTH_CENTER, 500, 10, 'MEDIUM', WHITE, BLACK)
+    hard_location = draw_button(screen, WINDOW_LENGTH_CENTER + 200, 500, 10, 'HARD', WHITE, BLACK)
 
 
 #Renders all Game Elements, Handles Game Logic, Etc.
-def render_game(screen):
+def render_game(screen:Surface):
     screen.fill('red')
 
 
 if __name__ == "__main__":
     #General pygame initialization
-    pygame.init()
     screen = pygame.display.set_mode((WINDOW_LENGTH, WINDOW_HEIGHT))
     clock = pygame.time.Clock()
     current_event:int
