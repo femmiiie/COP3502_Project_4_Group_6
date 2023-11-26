@@ -10,7 +10,8 @@
 #double import for type casting
 import pygame
 from pygame import *
-from sudoku_generator import SudokuGenerator
+from sudoku_generator import SudokuGenerator, generate_sudoku
+
 
 pygame.init()
 
@@ -28,9 +29,23 @@ DEFAULT_FONT = pygame.font.Font(None, 50)
 running = True
 in_menu = True
 
+def start_game(removed:int)->None:
+    global in_menu
+    in_menu = not in_menu
+    global sudoku, board
+    sudoku, board = generate_sudoku(9, 30)
+    sudoku.print_board()
+
+def end_game()->None:
+    global in_menu
+    in_menu = not in_menu
+    global sudoku, board
+    del sudoku, board
+
+
 #Currently only accounts for text centering
 #Will try to do button centering soon
-def draw_button(screen:Surface, left_edge:int, top_edge:int, border:int, text:str, text_color:tuple, background_color:tuple):
+def draw_button(screen:Surface, left_edge:int, top_edge:int, border:int, text:str, text_color:tuple, background_color:tuple)->Rect:
     text_object = DEFAULT_FONT.render(text, 0, text_color)
     sizes = (text_object.get_width() + border, text_object.get_height() + border)
     positions = (left_edge - (border//2), top_edge - (border//2))
@@ -41,18 +56,34 @@ def draw_button(screen:Surface, left_edge:int, top_edge:int, border:int, text:st
 
     return coords
         
+#True if area clicked, False otherwise
+def check_if_pressed(mouse_pos:tuple[int, int], button_location:Rect)->bool:
+    return True
+
 
 #Renders all Main Menu Elements, Buttons, Etc.
-def render_menu(screen:Surface):
+def render_menu(screen:Surface, mouse_pos:tuple[int, int], current_event:int):
     screen.fill('blue')
 
     easy_location = draw_button(screen, WINDOW_LENGTH_CENTER - 200, 500, 10, 'EASY', WHITE, BLACK)
     medium_location = draw_button(screen, WINDOW_LENGTH_CENTER, 500, 10, 'MEDIUM', WHITE, BLACK)
     hard_location = draw_button(screen, WINDOW_LENGTH_CENTER + 200, 500, 10, 'HARD', WHITE, BLACK)
+    exit_location = draw_button(screen, 10, 10, 10, "EXIT", WHITE, BLACK)
 
+    if current_event == pygame.MOUSEBUTTONUP:
+        if check_if_pressed(mouse_pos, easy_location):
+            start_game(30)
+        elif check_if_pressed(mouse_pos, medium_location):
+            start_game(40)
+        elif check_if_pressed(mouse_pos, hard_location):
+            start_game(50)
+        elif check_if_pressed(mouse_pos, exit_location):
+            exit()
+            
+            
 
 #Renders all Game Elements, Handles Game Logic, Etc.
-def render_game(screen:Surface):
+def render_game(screen:Surface, mouse_pos:tuple[int, int], current_event:int):
     screen.fill('red')
 
 
@@ -75,10 +106,10 @@ if __name__ == "__main__":
                 current_event = event.type
 
         if in_menu:
-            render_menu(screen)
+            render_menu(screen, mouse_pos, current_event)
 
         else:
-            render_game(screen)
+            render_game(screen, mouse_pos, current_event)
 
         
         
