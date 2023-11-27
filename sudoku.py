@@ -10,7 +10,7 @@
 #double import for type casting
 import pygame
 from pygame import *
-from sudoku_generator import SudokuGenerator, generate_sudoku
+from sudoku_generator import generate_sudoku
 
 
 pygame.init()
@@ -43,16 +43,17 @@ def end_game()->None:
     del sudoku, board
 
 
-#Currently only accounts for text centering
-#Will try to do button centering soon
-def draw_button(screen:Surface, left_edge:int, top_edge:int, border:int, text:str, text_color:tuple, background_color:tuple)->Rect:
+def draw_button(screen:Surface, x_pos:int, y_pos:int, border_size:int, text:str, text_color:tuple, background_color:tuple)->Rect:
     text_object = DEFAULT_FONT.render(text, 0, text_color)
-    sizes = (text_object.get_width() + border, text_object.get_height() + border)
-    positions = (left_edge - (border//2), top_edge - (border//2))
-    coords = pygame.Rect(positions[0], positions[1], sizes[0], sizes[1])
 
+    sizes = (text_object.get_width() + border_size, text_object.get_height() + border_size)
+    box_pos = (x_pos - (sizes[0]//2), y_pos - (sizes[1]//2))
+
+    text_center_pos = (box_pos[0] - (border_size//2), box_pos[1] - (border_size//2))
+    coords = pygame.Rect(text_center_pos[0], text_center_pos[1], sizes[0], sizes[1])
+    
     pygame.draw.rect(screen, background_color, coords)
-    screen.blit(text_object, (left_edge, top_edge))
+    screen.blit(text_object, box_pos)
 
     return coords
         
