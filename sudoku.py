@@ -58,8 +58,11 @@ def draw_button(screen:Surface, x_pos:int, y_pos:int, border_size:int, text:str,
     return coords
         
 #True if area clicked, False otherwise
-def check_if_pressed(mouse_pos:tuple[int, int], button_location:Rect)->bool:
-    return True
+def check_if_pressed(mouse_pos:tuple[int, int], button:Rect)->bool:
+    if button.left <= mouse_pos[0] <= button.right and button.top <= mouse_pos[1] <= button.bottom:
+        return True
+    else:
+        return False
 
 
 #Renders all Main Menu Elements, Buttons, Etc.
@@ -102,7 +105,7 @@ if __name__ == "__main__":
         for event in pygame.event.get():
             print(event.type)
             if event.type == pygame.QUIT:
-                running = False
+                exit()
             else:
                 current_event = event.type
 
