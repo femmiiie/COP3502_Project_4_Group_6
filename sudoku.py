@@ -40,9 +40,9 @@ def render_game(screen:Surface, mouse_pos:tuple[int, int], current_event:int):
     for i in range(9):
         for j in range(9):
             if board[i][j] != 0:
-                pygame.draw.rect(screen, (0, 0, 0), (i * space + 450, j * space, space + 1, space + 1), width=3,)
+                pygame.draw.rect(screen, (0, 0, 0), (i * space + 450, j * space + 225, space + 1, space + 1), width=3,)
             else:
-                pygame.draw.rect(screen, (255, 255, 50), (i * space + 450, j * space, space + 1, space + 1), width=3,)
+                pygame.draw.rect(screen, (255, 255, 50), (i * space + 450, j * space + 225, space + 1, space + 1), width=3,)
     #board_object.draw()
 
 
