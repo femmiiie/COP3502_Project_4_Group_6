@@ -36,6 +36,13 @@ def render_menu(screen:Surface, mouse_pos:tuple[int, int], current_event:int):
 #Renders all Game Elements, Handles Game Logic, Etc.
 def render_game(screen:Surface, mouse_pos:tuple[int, int], current_event:int):
     screen.fill('red')
+    space = 50
+    for i in range(9):
+        for j in range(9):
+            if board[i][j] != 0:
+                pygame.draw.rect(screen, (0, 0, 0), (i * space + 450, j * space, space + 1, space + 1), width=3,)
+            else:
+                pygame.draw.rect(screen, (255, 255, 50), (i * space + 450, j * space, space + 1, space + 1), width=3,)
     #board_object.draw()
 
 
