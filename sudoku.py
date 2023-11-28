@@ -48,9 +48,6 @@ def render_game(screen: Surface, mouse_pos: tuple[int, int], current_event: int)
                 screen.blit(cell_surf, cell_rect)
             else:
                 pygame.draw.rect(screen, (255, 255, 50), (i * space + 450, j * space + 225, space + 1, space + 1), width=3, )
-                sketched_surf = cell_font.render(str(board[i][j]), 0, (0, 0, 0))
-                sketched_rect = sketched_surf.get_rect(center=(i * space + 475, j * space + 250))
-                screen.blit(sketched_surf, sketched_rect)
     #board_object.draw()
 
 
