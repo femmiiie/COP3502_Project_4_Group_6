@@ -34,15 +34,23 @@ def render_menu(screen:Surface, mouse_pos:tuple[int, int], current_event:int):
             
 
 #Renders all Game Elements, Handles Game Logic, Etc.
-def render_game(screen:Surface, mouse_pos:tuple[int, int], current_event:int):
+def render_game(screen: Surface, mouse_pos: tuple[int, int], current_event: int):
     screen.fill('red')
+    cell_font = pygame.font.Font(None, 20)
     space = 50
+    # sketches board and cells
     for i in range(9):
         for j in range(9):
             if board[i][j] != 0:
-                pygame.draw.rect(screen, (0, 0, 0), (i * space + 450, j * space + 225, space + 1, space + 1), width=3,)
+                pygame.draw.rect(screen, (0, 0, 0), (i * space + 450, j * space + 225, space + 1, space + 1), width=3, )
+                cell_surf = cell_font.render(str(board[i][j]), 0, (0, 0, 0))
+                cell_rect = cell_surf.get_rect(center=(i * space + 475, j * space + 250))
+                screen.blit(cell_surf, cell_rect)
             else:
-                pygame.draw.rect(screen, (255, 255, 50), (i * space + 450, j * space + 225, space + 1, space + 1), width=3,)
+                pygame.draw.rect(screen, (255, 255, 50), (i * space + 450, j * space + 225, space + 1, space + 1), width=3, )
+                sketched_surf = cell_font.render(str(board[i][j]), 0, (0, 0, 0))
+                sketched_rect = sketched_surf.get_rect(center=(i * space + 475, j * space + 250))
+                screen.blit(sketched_surf, sketched_rect)
     #board_object.draw()
 
 
