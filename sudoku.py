@@ -29,12 +29,11 @@ DEFAULT_FONT = pygame.font.Font(None, 50)
 running = True
 in_menu = True
 
-def start_game(removed:int)->None:
+def start_game(removed:int, screen:Surface)->None:
     global in_menu
     in_menu = not in_menu
     global sudoku, board
-    sudoku, board = generate_sudoku(9, 30)
-    sudoku.print_board()
+    board = generate_sudoku(9, 30, screen)
 
 def end_game()->None:
     global in_menu
@@ -76,11 +75,11 @@ def render_menu(screen:Surface, mouse_pos:tuple[int, int], current_event:int):
 
     if current_event == pygame.MOUSEBUTTONUP:
         if check_if_pressed(mouse_pos, easy_location):
-            start_game(30)
+            start_game(30, screen)
         elif check_if_pressed(mouse_pos, medium_location):
-            start_game(40)
+            start_game(40, screen)
         elif check_if_pressed(mouse_pos, hard_location):
-            start_game(50)
+            start_game(50, screen)
         elif check_if_pressed(mouse_pos, exit_location):
             exit()
             
@@ -89,6 +88,7 @@ def render_menu(screen:Surface, mouse_pos:tuple[int, int], current_event:int):
 #Renders all Game Elements, Handles Game Logic, Etc.
 def render_game(screen:Surface, mouse_pos:tuple[int, int], current_event:int):
     screen.fill('red')
+    sudoku.board_object.draw()
 
 
 if __name__ == "__main__":
