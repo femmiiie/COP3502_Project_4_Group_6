@@ -2,19 +2,19 @@ import pygame
 from pygame import *
 from sudoku_generator import generate_sudoku
 from constants import *
-
+import globals
 
 
 def start_game(removed:int, screen:Surface)->None:
-    global in_menu
-    in_menu = not in_menu
-    global board
+   # global in_menu
+    globals.in_menu = not globals.in_menu
+    #global board
     board = generate_sudoku(9, 30, screen)
 
 def end_game()->None:
-    global in_menu
+    #global in_menu
     in_menu = not in_menu
-    global sudoku, board
+    #global sudoku, board
     del sudoku, board
 
 

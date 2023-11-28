@@ -1,26 +1,14 @@
-
-#TODOS:
-#add location and size parameters to cell (and board?) class
-#   would make it easier to address sizes of specific cell when drawing
-#create all buttons and both menus
-#   i have rendering functions for both started, may have to be renamed since we will prob do input/game handling in it too
-
-
 #IMPORTS
 #double import for type casting
 import pygame
 from pygame import *
+
 from board import Board
-from sudoku_generator import generate_sudoku
 from helper_methods import *
 from constants import *
+import globals
 
 pygame.init()
-
-#GLOBAL FLAGS
-running = True
-in_menu = True
-
 
 
 
@@ -48,7 +36,7 @@ def render_menu(screen:Surface, mouse_pos:tuple[int, int], current_event:int):
 #Renders all Game Elements, Handles Game Logic, Etc.
 def render_game(screen:Surface, mouse_pos:tuple[int, int], current_event:int):
     screen.fill('red')
-    sudoku.board_object.draw()
+    #board_object.draw()
 
 
 if __name__ == "__main__":
@@ -58,7 +46,7 @@ if __name__ == "__main__":
     current_event:int
 
     #Main Game Loop
-    while running:
+    while globals.running:
         mouse_pos = pygame.mouse.get_pos()
         
 
@@ -69,7 +57,7 @@ if __name__ == "__main__":
             else:
                 current_event = event.type
 
-        if in_menu:
+        if globals.in_menu:
             render_menu(screen, mouse_pos, current_event)
 
         else:

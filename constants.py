@@ -1,4 +1,5 @@
 import pygame
+pygame.font.init()
 
 #CONSTANTS
 WINDOW_HEIGHT = 720
