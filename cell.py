@@ -3,11 +3,12 @@
 #If the cell does not have a given value then value will be 0
 #Sketched and Value should never both have a real value at the same time
 class Cell:
-    def __init__(self, value:int, row:int, col:int):
+    def __init__(self, value:int, row:int, col:int, screen):
         self.value = value
         self.row = row
         self.col = col
         self.sketched = 0
+        self.screen = screen
     
     #Gets Definite Value of cell
     def get_cell_value(self)->int:
