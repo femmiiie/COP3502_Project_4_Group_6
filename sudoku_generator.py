@@ -24,11 +24,11 @@ class SudokuGenerator:
 	Return:
 	None
     '''
-    def __init__(self, row_length, removed_cells)->None:
+    def __init__(self, row_length, removed_cells, screen)->None:
         self.row_length = row_length
         self.removed_cells = removed_cells
         self.box_length = int(math.sqrt(self.row_length))
-        self.board_object = Board(self.row_length, self.row_length)
+        self.board_object = Board(self.row_length, self.row_length, screen)
         self.board = self.get_board()
 
     '''
@@ -224,6 +224,8 @@ class SudokuGenerator:
                 rand_box = (random.randint(0, 8), random.randint(0, 8))
             filled_boxes.append(rand_box)
             self.board_object.board[rand_box[0]][rand_box[1]].set_cell_value(0)
+        
+        self.board_object.set_reset_board(self.board_object.board)
 
 '''
 DO NOT CHANGE
@@ -240,10 +242,10 @@ removed is the number of cells to clear (set to 0)
 
 Return: list[list] (a 2D Python list to represent the board)
 '''
-def generate_sudoku(size, removed):
-    sudoku = SudokuGenerator(size, removed)
+def generate_sudoku(size, removed, screen):
+    sudoku = SudokuGenerator(size, removed, screen)
     sudoku.fill_values()
     board = sudoku.get_board()
     sudoku.remove_cells()
     board = sudoku.get_board()
-    return sudoku, board
+    return sudoku.board_object
