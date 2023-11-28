@@ -1,14 +1,17 @@
 from cell import Cell
-
+import pygame
 class Board:
 
-    def __init__(self, width, height):
+    def __init__(self, width:int, height:int, screen):
         self.width = width
         self.height = height
-        self.board = [[Cell(0, i, j) for i in range(width)] for j in range(height)]
+        self.board = [[Cell(0, i, j, screen) for i in range(width)] for j in range(height)]
         self.selected_cell = (0, 0)
         self.original_board = self.board
+        self.screen= screen
 
+    def set_reset_board(self, board:list[list[Cell]]):
+        self.reset_board = board
 
     # Draws the board
     def draw(self):
