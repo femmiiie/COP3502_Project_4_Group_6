@@ -9,7 +9,7 @@ def start_game(removed:int, screen:Surface)->None:
    # global in_menu
     globals.in_menu = not globals.in_menu
     #global board
-    board = generate_sudoku(9, 30, screen)
+    globals.board = generate_sudoku(9, 30, screen)
 
 def end_game()->None:
     #global in_menu

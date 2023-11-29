@@ -3,7 +3,10 @@
 import pygame
 from pygame import *
 
+#type casting imports
+from cell import Cell
 from board import Board
+
 from helper_methods import *
 from constants import *
 import globals
@@ -41,9 +44,9 @@ def render_game(screen: Surface, mouse_pos: tuple[int, int], current_event: int)
     # sketches board and cells
     for i in range(9):
         for j in range(9):
-            if board[i][j] != 0:
+            if globals.board.board[i][j].get_cell_value() != 0:
                 pygame.draw.rect(screen, (0, 0, 0), (i * space + 450, j * space + 225, space + 1, space + 1), width=3, )
-                cell_surf = cell_font.render(str(board[i][j]), 0, (0, 0, 0))
+                cell_surf = cell_font.render(str(globals.board.board[i][j].get_cell_value()), 0, (0, 0, 0))
                 cell_rect = cell_surf.get_rect(center=(i * space + 475, j * space + 250))
                 screen.blit(cell_surf, cell_rect)
             else:
