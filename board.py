@@ -12,60 +12,13 @@ class Board:
 
     def set_reset_board(self, board:list[list[Cell]]):
         self.reset_board = board
-
-    # Draws the board
-    def draw(self):
-        cell_size = 50
-        bold_line_width = 3
-        normal_line_width = 1
-        margin = 10
-
-        for i in range(self.width + 1):
-            if i % 3 == 0:
-                line_width = bold_line_width
-            else:
-                line_width = normal_line_width
-
-            pygame.draw.line(self.screen, (0, 0, 0), (margin + i * cell_size, margin),
-                             (margin + i * cell_size, margin + self.height * cell_size), line_width)
-
-        for j in range(self.height + 1):
-            if j % 3 == 0:
-                line_width = bold_line_width
-            else:
-                line_width = normal_line_width
-
-            pygame.draw.line(self.screen, (0, 0, 0), (margin, margin + j * cell_size),
-                             (margin + self.width * cell_size, margin + j * cell_size), line_width)
-            
-        for i in range(self.width):
-            for j in range(self.height):
-                cell = self.cells[i][j]
-                cell_rect = pygame.Rect(margin + i * cell_size, margin + j * cell_size, cell_size, cell_size)
-
-                if cell.original:
-                    pygame.draw.rect(self.screen, (200, 200, 200), cell_rect)
-                else:
-                    pygame.draw.rect(self.screen, (255, 255, 255), cell_rect)
-
-                if cell.value != 0:
-                    font = pygame.font.Font(None, 36)
-                    text = font.render(str(cell.value), True, (0, 0, 0))
-                    text_rect = text.get_rect(center=cell_rect.center)
-                    self.screen.blit(text, text_rect)
-
-                # Draw sketch if available
-                if cell.sketch:
-                    sketch_font = pygame.font.Font(None, 18)
-                    sketch_text = sketch_font.render(str(cell.sketch), True, (150, 150, 150))
-                    sketch_text_rect = sketch_text.get_rect(topleft=(cell_rect.left + 5, cell_rect.top + 5))
-                    self.screen.blit(sketch_text, sketch_text_rect)
-
-        pygame.display.flip()
             
     #Marks boards
-    def select(self, row, col):
+    def set_selected(self, row, col):
         self.selected_cell = (row, col)
+
+    def get_selected(self):
+        return self.selected_cell
 
     #Clicks or returns none
     def click(self, x, y):

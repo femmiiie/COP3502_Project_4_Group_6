@@ -16,6 +16,7 @@ import globals
 pygame.init()
 
 
+
 #Renders all Main Menu Elements, Buttons, Etc.
 def render_menu(screen:Surface, mouse_pos:tuple[int, int], current_event:int):
     screen.fill(BACKGROUND_COLOR)
@@ -31,11 +32,13 @@ def render_menu(screen:Surface, mouse_pos:tuple[int, int], current_event:int):
         SUBTITLE_FONT.render("Yash Patel", BLACK)[0]
         ]
     
+    common_height = TITLE_FONT.get_rect("A").height
     for i, text in enumerate(title_contents):
-        center_pos = (WINDOW_LENGTH_CENTER, (i*75) + 75)
+        center_pos = (WINDOW_LENGTH_CENTER, (i*75) + common_height + 15)
         screen.blit(text, text.get_rect(center=center_pos))
+    common_height = SUBTITLE_FONT.get_rect("A").height
     for i, text in enumerate(subtitle_contents):
-        center_pos = (WINDOW_LENGTH_CENTER, (i*55) + 225)
+        center_pos = (WINDOW_LENGTH_CENTER, (i*55) + common_height + 175)
         screen.blit(text, text.get_rect(center=center_pos))
 
 
@@ -59,27 +62,37 @@ def render_menu(screen:Surface, mouse_pos:tuple[int, int], current_event:int):
 
 #Renders all Game Elements, Handles Game Logic, Etc.
 def render_game(screen: Surface, mouse_pos: tuple[int, int], current_event: int):
-    screen.fill('red')
+    screen.fill(BACKGROUND_COLOR)
     box_size = 50
     offsets = (200,450)
 
     #don't ask how i figured this out i have no idea
     #makes it so box lines are accented
     width_matrix = [0, 1, 2, 2, 3, 4, 4, 5, 6, 7]
-    cell_font = pygame.freetype.Font(None, box_size-10)
+    cell_font = pygame.freetype.SysFont("Calibri", box_size-10)
+    
+    
+    #renders background for selected element
+    selected = globals.board.get_selected()
+    distances = ((selected[0]*box_size + offsets[1]) - width_matrix[selected[0]], (selected[1]*box_size + offsets[0]) - width_matrix[selected[1]])
+    if selected[0] < 9 and selected[1] < 9:
+        box_coordinates = pygame.draw.rect(screen, HIGHLIGHTED_COLOR_1, (distances[0], distances[1], box_size + 1, box_size + 1), box_size)
     
     # sketches board and cells
     for i in range(9):
         for j in range(9):
             distances = ((i*box_size + offsets[1]) - width_matrix[i], (j*box_size + offsets[0]) - width_matrix[j])
+            box_coordinates = pygame.draw.rect(screen, BLACK, (distances[0], distances[1], box_size + 1, box_size + 1), 2)
+
             if globals.board.board[i][j].get_cell_value() != 0:
-                
-                box_coordinates = pygame.draw.rect(screen, BLACK, (distances[0], distances[1], box_size + 1, box_size + 1), 3)
                 cell_surf = cell_font.render(str(globals.board.board[i][j].get_cell_value()), BLACK)[0]
                 cell_rect = cell_surf.get_rect(center=box_coordinates.center)
                 screen.blit(cell_surf, cell_rect)
+
             else:
-                pygame.draw.rect(screen, BLACK, (distances[0], distances[1], box_size + 1, box_size + 1), width=3, )
+                pass
+    
+
 
 
 if __name__ == "__main__":
@@ -94,7 +107,7 @@ if __name__ == "__main__":
         
 
         for event in pygame.event.get():
-            print(event.type)
+            #print(event.type)
             if event.type == pygame.QUIT:
                 exit()
             else:
@@ -106,8 +119,6 @@ if __name__ == "__main__":
         else:
             render_game(screen, mouse_pos, current_event)
 
-        
-        
         pygame.display.flip()
 
 

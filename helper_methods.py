@@ -20,8 +20,10 @@ def end_game()->None:
 
 def draw_button(screen:Surface, x_pos:int, y_pos:int, border_size:int, text:str, text_color:tuple, background_color:tuple)->Rect:
     text_object = DEFAULT_FONT.render(text, text_color)[0]
+    common_height = DEFAULT_FONT.get_rect("A").height
+    
 
-    button_size = (text_object.get_width() + border_size, text_object.get_height() + border_size)
+    button_size = (text_object.get_width() + border_size, common_height + border_size)
     text_position = (x_pos - (button_size[0]//2), y_pos - (button_size[1]//2))
 
     box_position = (text_position[0] - (border_size//2), text_position[1] - (border_size//2))
