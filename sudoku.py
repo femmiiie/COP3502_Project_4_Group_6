@@ -60,8 +60,12 @@ def render_game(screen: Surface, mouse_pos: tuple[int, int], current_event):
             exit_location
         ])
     elif current_event.type == pygame.KEYDOWN:
-        print("pressed!")
-        move_selected(current_event)
+        
+        pressed = pygame.key.get_pressed()
+        selected = globals.board.get_selected()
+
+        try_move_selected(pressed, selected)
+        try_update_cell(pressed, selected)
         
 
 

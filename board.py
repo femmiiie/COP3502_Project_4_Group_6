@@ -19,29 +19,11 @@ class Board:
     def get_selected(self):
         return self.selected_cell
 
-    #Clicks or returns none
-    def click(self, x, y):
-        cell_size = 50
-        margin = 10
-
-        if margin <= x <= margin + self.width * cell_size and margin <= y <= margin + self.height * cell_size:
-            row = (x - margin) // cell_size
-            col = (y - margin) // cell_size
-            return int(row), int(col)
-        else:
-            return None
-    
     #Clears the cells
     def clear(self):
         if self.selected_cell:
             row, col = self.selected_cell
             self.cells[row][col].value = 0
-
-    #Sketches the cells
-    def sketch(self, value):
-        if self.selected_cell:
-            row, col = self.selected_cell
-            self.cells[row][col].sketch = value
 
     '''GETTERS FOR VALIDATION METHODS'''
     #Gets values from specified row as ints
@@ -80,9 +62,8 @@ class Board:
 
     # Reset all cells in the board to their original values.
     def reset_to_original(self):
-        for i in self.board:
-            for j in i:
-                j.set_sketched_value(0)
+        self.board = self.reset_board
+        self.set_selected(9, 9)
 
     # Returns a Boolean value indicating whether the board is full or not.
     def is_full(self):
