@@ -40,3 +40,16 @@ def check_if_pressed(mouse_pos:tuple[int, int], button:Rect)->bool:
         return True
     else:
         return False
+    
+def check_menu(screen, mouse_pos:tuple[int, int], buttons:list[Rect])->None:
+    if check_if_pressed(mouse_pos, buttons[0]):
+        start_game(30, screen)
+    elif check_if_pressed(mouse_pos, buttons[1]):
+        start_game(40, screen)
+    elif check_if_pressed(mouse_pos, buttons[2]):
+        start_game(50, screen)
+    elif check_if_pressed(mouse_pos, buttons[3]):
+        exit()
+
+def check_game(screen, mouse_pos:tuple[int, int], buttons:list[Rect])->None:
+    pass
