@@ -97,7 +97,7 @@ def render_game(screen: Surface, mouse_pos: tuple[int, int], current_event):
             restart_location,
             exit_location
         ])
-        #check_box_selection()
+        check_box_selection(mouse_pos, offsets, box_size)
 
 
 

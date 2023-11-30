@@ -52,8 +52,15 @@ def check_menu(screen, mouse_pos:tuple[int, int], buttons:list[Rect])->None:
     elif check_if_pressed(mouse_pos, buttons[3]):
         exit()
 
-def check_box_selection(mouse_pos:tuple[int, int], buttons:list[Rect]):
-    pass
+def check_box_selection(mouse_pos:tuple[int, int], offsets:tuple[int, int], box_size:int):
+    selection = (
+        floor((mouse_pos[0] - offsets[0]) / box_size),
+        floor((mouse_pos[1] - offsets[1]) / box_size)
+    )
+    if 0 <= selection[0] <= 8 and 0 <= selection[1] <= 8:
+        globals.board.set_selected(selection[0], selection[1])
+    else:
+        globals.board.set_selected(9, 9)
 
 
 def check_game(screen, mouse_pos:tuple[int, int], buttons:list[Rect])->None:
