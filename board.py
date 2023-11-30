@@ -6,7 +6,7 @@ class Board:
         self.width = width
         self.height = height
         self.board = [[Cell(0, i, j, screen) for i in range(width)] for j in range(height)]
-        self.selected_cell = (0, 0)
+        self.selected_cell = (9, 9)
         self.original_board = self.board
         self.screen= screen
 

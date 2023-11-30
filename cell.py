@@ -26,7 +26,3 @@ class Cell:
     def set_sketched_value(self, value:int)->None:
         self.sketched = value
     
-    def draw(self):
-        pass
-
-    
