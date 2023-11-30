@@ -1,5 +1,6 @@
 from cell import Cell
 import pygame
+import copy
 class Board:
 
     def __init__(self, width:int, height:int):
@@ -10,7 +11,12 @@ class Board:
         self.original_board = self.board
 
     def set_reset_board(self, board:list[list[Cell]]):
-        self.reset_board = board
+        self.reset_board = copy.deepcopy(board)
+    
+    # Reset all cells in the board to their original values.
+    def reset_to_original(self):
+        self.board = copy.deepcopy(self.reset_board)
+        self.set_selected(9, 9)
             
     #Marks boards
     def set_selected(self, row, col):
@@ -60,10 +66,6 @@ class Board:
     def place_number(self, value):
         self.board[self.selected_cell[0]][self.selected_cell[1]].set_sketched_value(value)
 
-    # Reset all cells in the board to their original values.
-    def reset_to_original(self):
-        self.board = self.reset_board
-        self.set_selected(9, 9)
 
     # Returns a Boolean value indicating whether the board is full or not.
     def is_full(self):

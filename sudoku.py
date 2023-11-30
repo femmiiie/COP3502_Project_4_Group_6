@@ -64,8 +64,9 @@ def render_game(screen: Surface, mouse_pos: tuple[int, int], current_event):
         pressed = pygame.key.get_pressed()
         selected = globals.board.get_selected()
 
-        try_move_selected(pressed, selected)
-        try_update_cell(pressed, selected)
+        if (0 <= selected[0] <= 8) and (0 <= selected[1] <= 8):
+            try_move_selected(pressed, selected)
+            try_update_cell(pressed, selected)
         
 
 
