@@ -3,6 +3,7 @@ from pygame import *
 from sudoku_generator import generate_sudoku
 from constants import *
 import globals
+from math import floor
 
 
 def start_game(removed:int, screen:Surface)->None:
@@ -13,9 +14,9 @@ def start_game(removed:int, screen:Surface)->None:
 
 def end_game()->None:
     #global in_menu
-    in_menu = not in_menu
+    globals.in_menu = not globals.in_menu
     #global sudoku, board
-    del sudoku, board
+    globals.board = object
 
 
 def draw_button(screen:Surface, x_pos:int, y_pos:int, border_size:int, text:str, text_color:tuple, background_color:tuple)->Rect:
@@ -51,5 +52,14 @@ def check_menu(screen, mouse_pos:tuple[int, int], buttons:list[Rect])->None:
     elif check_if_pressed(mouse_pos, buttons[3]):
         exit()
 
-def check_game(screen, mouse_pos:tuple[int, int], buttons:list[Rect])->None:
+def check_box_selection(mouse_pos:tuple[int, int], buttons:list[Rect]):
     pass
+
+
+def check_game(screen, mouse_pos:tuple[int, int], buttons:list[Rect])->None:
+    if check_if_pressed(mouse_pos, buttons[0]):
+        pass
+    elif check_if_pressed(mouse_pos, buttons[1]):
+        end_game()
+    elif check_if_pressed(mouse_pos, buttons[2]):
+        exit()

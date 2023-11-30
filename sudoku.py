@@ -56,10 +56,10 @@ def render_menu(screen:Surface, mouse_pos:tuple[int, int], current_event):
             
 
 #Renders all Game Elements, Handles Game Logic, Etc.
-def render_game(screen: Surface, mouse_pos: tuple[int, int], current_event: int):
+def render_game(screen: Surface, mouse_pos: tuple[int, int], current_event):
     screen.fill(BACKGROUND_COLOR)
     box_size = 50
-    offsets = (WINDOW_LENGTH_CENTER - 4.5*box_size, WINDOW_HEIGHT_CENTER - 4.5*box_size)
+    offsets = (WINDOW_LENGTH_CENTER - 4.5*box_size - 125, WINDOW_HEIGHT_CENTER - 4.5*box_size)
     cell_font = pygame.freetype.SysFont("Calibri", box_size-10)
 
     #don't ask how i figured this out i have no idea
@@ -86,6 +86,18 @@ def render_game(screen: Surface, mouse_pos: tuple[int, int], current_event: int)
             else:
                 pass
     
+    button_x_pos = offsets[0] + 13*box_size
+    reset_location = draw_button(screen, button_x_pos, WINDOW_HEIGHT_CENTER-100, 30, " Reset ", WHITE, BUTTON_COLOR)
+    restart_location = draw_button(screen, button_x_pos, WINDOW_HEIGHT_CENTER, 30, "Restart", WHITE, BUTTON_COLOR)
+    exit_location = draw_button(screen, button_x_pos, WINDOW_HEIGHT_CENTER+100, 30, "   Exit   ", WHITE, BUTTON_COLOR)
+    
+    if current_event.type == pygame.MOUSEBUTTONUP:
+        check_game(screen, mouse_pos, [
+            reset_location,
+            restart_location,
+            exit_location
+        ])
+        #check_box_selection()
 
 
 
