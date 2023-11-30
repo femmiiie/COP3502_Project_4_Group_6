@@ -54,7 +54,7 @@ def render_game(screen: Surface, mouse_pos: tuple[int, int], current_event):
     
     if current_event.type == pygame.MOUSEBUTTONUP:
         check_box_selection(mouse_pos, offsets, box_size)
-        check_game(screen, mouse_pos, [
+        check_game(mouse_pos, [
             reset_location,
             restart_location,
             exit_location

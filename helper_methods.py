@@ -64,10 +64,9 @@ def check_box_selection(mouse_pos:tuple[int, int], offsets:tuple[int, int], box_
         globals.board.set_selected(9, 9)
 
 
-def check_game(screen, mouse_pos:tuple[int, int], buttons:list[Rect])->None:
+def check_game(mouse_pos:tuple[int, int], buttons:list[Rect])->None:
     if check_if_pressed(mouse_pos, buttons[0]):
         globals.board.reset_to_original()
-        print('reset!')
     elif check_if_pressed(mouse_pos, buttons[1]):
         end_game()
     elif check_if_pressed(mouse_pos, buttons[2]):
@@ -95,6 +94,9 @@ def try_move_selected(pressed, selected):
         globals.board.set_selected(selected[0], 0)
 
 def try_update_cell(pressed, selected):
+    if globals.board.board[selected[0]][selected[1]].get_cell_value() != 0:
+        return
+    
     sketched = globals.board.board[selected[0]][selected[1]].get_sketched_value()
 
     #if theres a faster way of doing this please do it
@@ -121,7 +123,6 @@ def try_update_cell(pressed, selected):
         sketched = 9
 
     globals.board.board[selected[0]][selected[1]].set_sketched_value(sketched)
-    print(sketched)
 
     
 
@@ -175,6 +176,7 @@ def display_board_elements(screen:Surface, box_size:int, offsets:tuple[int, int]
                 cell_surf = cell_font.render(str(globals.board.board[i][j].get_cell_value()), BLACK)[0]
                 cell_rect = cell_surf.get_rect(center=box_coordinates.center)
                 screen.blit(cell_surf, cell_rect)
+
             elif globals.board.board[i][j].get_sketched_value() != 0:
                 sketch_offset = (box_coordinates.centerx - (box_size//10), 
                                  box_coordinates.centery - (box_size//10))
