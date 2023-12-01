@@ -8,14 +8,27 @@ class Board:
         self.height = height
         self.board = [[Cell(0, i, j) for i in range(width)] for j in range(height)]
         self.selected_cell = (9, 9)
-        self.original_board = self.board
+        self.solved_board = self.board
+
+
+    def get_int_list(self)->list[list[int]]:
+        board_list = []
+        for i in range(len(self.board)):
+            board_list.append(self.get_row(i))
+        return board_list
+
 
     def set_reset_board(self, board:list[list[Cell]]):
-        self.reset_board = copy.deepcopy(board)
+        self.reset_board = self.get_int_list()
     
+
     # Reset all cells in the board to their original values.
     def reset_to_original(self):
-        self.board = copy.deepcopy(self.reset_board)
+        for i in range(len(self.board)):
+            for j in range(len(self.board[i])):
+                self.board[i][j].set_cell_value(self.reset_board[i][j])
+                self.board[i][j].set_sketched_value(0)
+
         self.set_selected(9, 9)
             
     #Marks boards
@@ -44,7 +57,7 @@ class Board:
 
 
     #Get values from specified col as ints
-        def get_col(self, num: int) -> list[int]:
+    def get_col(self, num: int) -> list[int]:
         value_list = []
         for i in range(len(self.board)):
             if self.board[i][num].get_cell_value() == 0:
@@ -87,50 +100,62 @@ class Board:
     # Check row, col, and box function make sure that each number is found in each. Combined in check_board
 
     def check_row(self):
-        solved_rows = 0
         for i in range(0, 9):
             found_nums = 0
-            for num in [1, 2, 3, 4, 5, 6, 7, 8, 9]:
-                if num in set(self.get_row(i)):
+            current_row = self.get_row(i)
+            for num in range(1,10):
+                if num in current_row:
                     found_nums += 1
-            if found_nums == 9:
-                solved_rows += 1
-        if solved_rows == 9:
-            return True
-        else:
-            return False
+
+                    try:
+                        current_row.remove(num)
+                    except:
+                        return False
+
+            if len(current_row) != 0:
+                return False
+
+        return True
 
     def check_col(self):
-        solved_cols = 0
         for i in range(0, 9):
             found_nums = 0
-            for num in [1, 2, 3, 4, 5, 6, 7, 8, 9]:
-                if num in set(self.get_col(i)):
+            current_col = self.get_col(i)
+            for num in range(1,10):
+                if num in current_col:
                     found_nums += 1
-            if found_nums == 9:
-                solved_cols += 1
-        if solved_cols == 9:
-            return True
-        else:
-            return False
+
+                    try:
+                        current_col.remove(num)
+                    except:
+                        return False
+
+            if len(current_col) != 0:
+                return False
+
+        return True
+        
 
     def check_box(self):
-        solved_boxes = 0
         for r in range(0, 9, 3):
             for c in range(0, 9, 3):
-                found_nums = 0
-                for num in [1, 2, 3, 4, 5, 6, 7, 8, 9]:
-                    if num in set(self.get_box(r, c)):
-                        found_nums += 1
-                if found_nums == 9:
-                    solved_boxes += 1
-        if solved_boxes == 9:
-            return True
-        else:
-            return False
+                current_box = self.get_box(r, c)
+
+                for num in range(1,10):
+                
+                    if num in current_box:
+                        try:
+                            current_box.remove(num)
+                        except:
+                            return False
+                        
+                if len(current_box) != 0:
+                    return False
+        
+        return True
 
     def check_board(self):
-        if self.check_box and self.check_row and self.check_col:
+        if self.check_box() and self.check_row() and self.check_col():
             return True
         return False
         

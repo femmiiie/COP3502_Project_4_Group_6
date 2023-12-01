@@ -19,7 +19,6 @@ pygame.init()
 
 #Renders all Main Menu Elements, Buttons, Etc.
 def render_menu(screen:Surface, mouse_pos:tuple[int, int], current_event):
-    screen.fill(BACKGROUND_COLOR)
 
     display_title_elements(screen)
     
@@ -39,7 +38,6 @@ def render_menu(screen:Surface, mouse_pos:tuple[int, int], current_event):
 
 #Renders all Game Elements, Handles Game Logic, Etc.
 def render_game(screen: Surface, mouse_pos: tuple[int, int], current_event):
-    screen.fill(BACKGROUND_COLOR)
     box_size = 50
     offsets = (
         WINDOW_LENGTH_CENTER - (4.5 * box_size) - 125, 
@@ -73,6 +71,36 @@ def render_game(screen: Surface, mouse_pos: tuple[int, int], current_event):
             try_submit_sketch(pressed, selected)
         
 
+def render_win(screen: Surface, mouse_pos: tuple[int, int], current_event):
+    common_height = TITLE_FONT.get_rect("A").height
+    text = TITLE_FONT.render("WINNER!", BLACK)[0]
+    center_pos = (WINDOW_LENGTH_CENTER, 90 + common_height)
+    screen.blit(text, text.get_rect(center=center_pos))
+
+    exit_location = draw_button(screen, WINDOW_LENGTH_CENTER-100, 500, 30, "Exit", WHITE, BUTTON_COLOR)
+    play_location = draw_button(screen, WINDOW_LENGTH_CENTER+100, 500, 30, "Play Again", WHITE, BUTTON_COLOR)
+
+    if current_event.type == pygame.MOUSEBUTTONUP:
+        check_finish(mouse_pos, [
+            exit_location,
+            play_location
+        ])
+
+def render_loss(screen: Surface, mouse_pos: tuple[int, int], current_event):
+    common_height = TITLE_FONT.get_rect("A").height
+    text = TITLE_FONT.render("GAME OVER:(", BLACK)[0]
+    center_pos = (WINDOW_LENGTH_CENTER, 90 + common_height)
+    screen.blit(text, text.get_rect(center=center_pos))
+
+    exit_location = draw_button(screen, WINDOW_LENGTH_CENTER-100, 500, 30, "Exit", WHITE, BUTTON_COLOR)
+    play_location = draw_button(screen, WINDOW_LENGTH_CENTER+100, 500, 30, "Play Again", WHITE, BUTTON_COLOR)
+
+    if current_event.type == pygame.MOUSEBUTTONUP:
+        check_finish(mouse_pos, [
+            exit_location,
+            play_location
+        ])
+
 
 
 if __name__ == "__main__":
@@ -83,6 +111,8 @@ if __name__ == "__main__":
 
     #Main Game Loop
     while globals.running:
+        screen.fill(BACKGROUND_COLOR)
+        
         mouse_pos = pygame.mouse.get_pos()
         
         #Using Poll Instead of Get to Prevent 'Phantom Holding'
@@ -90,11 +120,16 @@ if __name__ == "__main__":
         if current_event.type == pygame.QUIT:
             exit()
 
-        if globals.in_menu:
-            render_menu(screen, mouse_pos, current_event)
-
-        else:
-            render_game(screen, mouse_pos, current_event)
+        match globals.state:
+            case "menu":
+                render_menu(screen, mouse_pos, current_event)
+            case "game":
+                render_game(screen, mouse_pos, current_event)
+            case "win":
+                render_win(screen, mouse_pos, current_event)
+            case "loss":
+                render_loss(screen, mouse_pos, current_event)
+            
 
         pygame.display.flip()
 

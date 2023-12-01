@@ -9,12 +9,12 @@ from math import floor
 
 
 def start_game(removed:int, screen:Surface)->None:
-    globals.in_menu = not globals.in_menu
+    globals.state = globals.possible_states[1]
     globals.board = generate_sudoku(9, removed)
 
 
 def end_game()->None:
-    globals.in_menu = not globals.in_menu
+    globals.state = globals.possible_states[0]
     globals.board = object
 
 
@@ -56,6 +56,12 @@ def check_game(mouse_pos:tuple[int, int], buttons:list[Rect])->None:
         end_game()
     elif check_if_pressed(mouse_pos, buttons[2]):
         exit()
+
+def check_finish(mouse_pos:tuple[int, int], buttons:list[Rect]):
+    if check_if_pressed(mouse_pos, buttons[0]):
+        exit()
+    elif check_if_pressed(mouse_pos, buttons[1]):
+        globals.state = globals.possible_states[0]
 
 
 def try_move_selected(pressed, selected):
@@ -116,6 +122,14 @@ def try_submit_sketch(pressed, selected):
         globals.board.board[selected[0]][selected[1]].set_cell_value(sketched)
         globals.board.board[selected[0]][selected[1]].set_sketched_value(0)
         globals.board.board[selected[0]][selected[1]].set_entered(True)
+
+        if globals.board.is_full():
+            globals.state = globals.possible_states[3]
+
+            if globals.board.check_board():
+                globals.state = globals.possible_states[2]
+    
+
 
 def determine_color(row, col):
     if globals.board.board[row][col].get_entered():

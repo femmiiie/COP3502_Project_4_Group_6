@@ -225,7 +225,6 @@ class SudokuGenerator:
             filled_boxes.append(rand_box)
             self.board_object.board[rand_box[0]][rand_box[1]].set_cell_value(0)
         
-        self.board_object.set_reset_board(self.board_object.board)
 
 '''
 DO NOT CHANGE
@@ -245,7 +244,7 @@ Return: list[list] (a 2D Python list to represent the board)
 def generate_sudoku(size, removed):
     sudoku = SudokuGenerator(size, removed)
     sudoku.fill_values()
-    board = sudoku.get_board()
+    sudoku.board_object.solved_board = sudoku.get_board()
     sudoku.remove_cells()
-    board = sudoku.get_board()
+    sudoku.board_object.reset_board = sudoku.get_board()
     return sudoku.board_object

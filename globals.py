@@ -1,5 +1,9 @@
 from board import Board
 
+#replaces old state checking for simplicity
+state = "menu"
+possible_states = ["menu", "game", "win", "loss"]
+
 #Mostly Obsoleted, Still Here For Consistency
 running = True
 
@@ -13,5 +17,5 @@ game_finished = False
 correct_solution = False
 
 #Global Board Object
-#Set To Board Type When No Game Is Active
+#Set To Empty Board Type When No Game Is Active
 board = Board
