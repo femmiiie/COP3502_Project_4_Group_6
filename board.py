@@ -116,8 +116,8 @@ class Board:
 
     def check_box(self):
         solved_boxes = 0
-        for r in range(0, 3):
-            for c in range(0, 3):
+        for r in range(0, 9, 3):
+            for c in range(0, 9, 3):
                 found_nums = 0
                 for num in [1, 2, 3, 4, 5, 6, 7, 8, 9]:
                     if num in set(self.get_box(r, c)):
