@@ -2,7 +2,6 @@
 #double import for type casting
 import pygame
 from pygame import *
-
 import pygame.freetype
 
 #type casting imports
@@ -10,6 +9,7 @@ from cell import Cell
 from board import Board
 
 from helper_methods import *
+from display_methods import *
 from constants import *
 import globals
 
@@ -51,6 +51,9 @@ def render_game(screen: Surface, mouse_pos: tuple[int, int], current_event):
     reset_location = draw_button(screen, button_x_pos, WINDOW_HEIGHT_CENTER-100, 30, " Reset ", WHITE, BUTTON_COLOR)
     restart_location = draw_button(screen, button_x_pos, WINDOW_HEIGHT_CENTER, 30, "Restart", WHITE, BUTTON_COLOR)
     exit_location = draw_button(screen, button_x_pos, WINDOW_HEIGHT_CENTER+100, 30, "   Exit   ", WHITE, BUTTON_COLOR)
+
+    num_offsets = (offsets[0] - 1.2*box_size, offsets[1] + 10*box_size)
+    num_locations = [draw_button(screen, num_offsets[0] + i*1.3*box_size, num_offsets[1], 25, str(i), NUM_COLOR, NUM_BUTTON_COLOR) for i in range(10)]
     
     if current_event.type == pygame.MOUSEBUTTONUP:
         check_box_selection(mouse_pos, offsets, box_size)
@@ -67,6 +70,7 @@ def render_game(screen: Surface, mouse_pos: tuple[int, int], current_event):
         if (0 <= selected[0] <= 8) and (0 <= selected[1] <= 8):
             try_move_selected(pressed, selected)
             try_update_cell(pressed, selected)
+            try_submit_sketch(pressed, selected)
         
 
 

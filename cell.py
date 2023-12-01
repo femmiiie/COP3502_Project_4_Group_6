@@ -8,6 +8,7 @@ class Cell:
         self.row = row
         self.col = col
         self.sketched = 0
+        self.entered = False
     
     #Gets Definite Value of cell
     def get_cell_value(self)->int:
@@ -24,4 +25,10 @@ class Cell:
     #Sets User Inputted Value of cell
     def set_sketched_value(self, value:int)->None:
         self.sketched = value
+
+    def get_entered(self)->bool:
+        return self.entered
+    
+    def set_entered(self, value:bool)->None:
+        self.entered = value
     
