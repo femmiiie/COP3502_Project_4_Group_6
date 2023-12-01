@@ -44,9 +44,11 @@ class Board:
 
 
     #Get values from specified col as ints
-    def get_col(self, num:int)->list[int]:
+        def get_col(self, num: int) -> list[int]:
         value_list = []
         for i in range(len(self.board)):
+            if self.board[i][num].get_cell_value() == 0:
+                value_list.append(self.board[i][num].get_sketched_value())
             value_list.append(self.board[i][num].get_cell_value())
         return value_list
 
