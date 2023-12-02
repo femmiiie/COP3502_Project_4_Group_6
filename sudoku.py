@@ -44,6 +44,7 @@ def render_game(screen: Surface, mouse_pos: tuple[int, int], current_event):
     
     display_board_elements(screen, box_size, offsets)
     
+    
     button_x_pos = offsets[0] + 13*box_size
     reset_location = draw_button(screen, button_x_pos, WINDOW_HEIGHT_CENTER-100, 30, " Reset ", WHITE, BUTTON_COLOR)
     restart_location = draw_button(screen, button_x_pos, WINDOW_HEIGHT_CENTER, 30, "Restart", WHITE, BUTTON_COLOR)
@@ -51,17 +52,21 @@ def render_game(screen: Surface, mouse_pos: tuple[int, int], current_event):
 
     num_offsets = (offsets[0] - 1.2*box_size, offsets[1] + 10*box_size)
     num_locations = [
-        (draw_button(screen, num_offsets[0] + i*1.3*box_size, num_offsets[1], 25, str(i), NUM_COLOR, NUM_BUTTON_COLOR), )for i in range(10)
+        (draw_button(screen, num_offsets[0] + i*1.3*box_size, num_offsets[1], 25, str(i), NUM_COLOR, NUM_BUTTON_COLOR),
+          "globals.board.board[globals.board.get_selected()[0]][globals.board.get_selected()[1]].set_sketched_value(index)") for i in range(10)
          ]
     
     if current_event.type == pygame.MOUSEBUTTONUP:
+        if (0 <= globals.board.get_selected()[0] <= 8) and (0 <= globals.board.get_selected()[1] <= 8):
+            check_any(screen, mouse_pos, num_locations)
+           
         check_box_selection(mouse_pos, offsets, box_size)
         check_any(screen, mouse_pos, [
             (reset_location, "globals.board.reset_to_original()"),
             (restart_location, "end_game()"),
             (exit_location, "exit()")
         ])
-        #check_nums(mouse_pos, num_locations)
+        
     elif current_event.type == pygame.KEYDOWN:
         
         pressed = pygame.key.get_pressed()
@@ -82,6 +87,7 @@ def render_end(screen: Surface, mouse_pos: tuple[int, int], current_event, win:b
         text = TITLE_FONT.render("GAME OVER:(", BLACK)[0]
     center_pos = (WINDOW_LENGTH_CENTER, 110 + common_height)
     screen.blit(text, text.get_rect(center=center_pos))
+
 
     exit_location = draw_button(screen, WINDOW_LENGTH_CENTER-100, 500, 30, "Exit", WHITE, BUTTON_COLOR)
     play_location = draw_button(screen, WINDOW_LENGTH_CENTER+100, 500, 30, "Play Again", WHITE, BUTTON_COLOR)

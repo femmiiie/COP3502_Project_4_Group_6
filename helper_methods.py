@@ -38,11 +38,15 @@ def check_box_selection(mouse_pos:tuple[int, int], offsets:tuple[int, int], box_
         globals.board.set_selected(9, 9)
 
 
+#generalized version of old check functions using exec()
 def check_any(screen, mouse_pos:tuple[int, int], buttons:list[tuple]):
-    for element in buttons:
+    for index, element in enumerate(buttons):
         if check_if_pressed(mouse_pos, element[0]):
             exec(element[1])
 
+
+def handle_keyboard_input():
+    pass
 
 def try_move_selected(pressed, selected):
     if pressed[pygame.K_w] | pressed[pygame.K_UP]:
