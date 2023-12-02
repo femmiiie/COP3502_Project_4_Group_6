@@ -93,7 +93,7 @@ def render_end(screen: Surface, mouse_pos: tuple[int, int], current_event, win:b
     play_location = draw_button(screen, WINDOW_LENGTH_CENTER+100, 500, 30, "Play Again", WHITE, BUTTON_COLOR)
 
     if current_event.type == pygame.MOUSEBUTTONUP:
-        check_any(mouse_pos, [
+        check_any(screen, mouse_pos, [
             (exit_location, "exit()"),
             (play_location, "globals.state = globals.possible_states[0]")
         ])
