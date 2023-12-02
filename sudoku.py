@@ -116,15 +116,14 @@ if __name__ == "__main__":
         if current_event.type == pygame.QUIT:
             exit()
 
-        match globals.state:
-            case "menu":
-                render_menu(screen, mouse_pos, current_event)
-            case "game":
-                render_game(screen, mouse_pos, current_event)
-            case "win":
-                render_end(screen, mouse_pos, current_event, True)
-            case "loss":
-                render_end(screen, mouse_pos, current_event, False)
+        if globals.state == "menu":
+            render_menu(screen, mouse_pos, current_event)
+        elif globals.state == "game":
+            render_game(screen, mouse_pos, current_event)
+        elif globals.state == "win":
+            render_end(screen, mouse_pos, current_event, True)
+        elif globals.state == "loss":
+            render_end(screen, mouse_pos, current_event, False)
             
 
         pygame.display.flip()
