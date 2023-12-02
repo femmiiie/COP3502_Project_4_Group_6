@@ -8,7 +8,7 @@ from math import floor
 
 
 
-def start_game(removed:int, screen:Surface)->None:
+def start_game(removed:int)->None:
     globals.state = globals.possible_states[1]
     globals.board = generate_sudoku(9, removed)
 
@@ -27,17 +27,6 @@ def check_if_pressed(mouse_pos:tuple[int, int], button:Rect)->bool:
         return False
     
 
-def check_menu(screen, mouse_pos:tuple[int, int], buttons:list[Rect])->None:
-    if check_if_pressed(mouse_pos, buttons[0]):
-        start_game(30, screen)
-    elif check_if_pressed(mouse_pos, buttons[1]):
-        start_game(40, screen)
-    elif check_if_pressed(mouse_pos, buttons[2]):
-        start_game(50, screen)
-    elif check_if_pressed(mouse_pos, buttons[3]):
-        exit()
-
-
 def check_box_selection(mouse_pos:tuple[int, int], offsets:tuple[int, int], box_size:int):
     selection = (
         floor((mouse_pos[0] - offsets[0]) / box_size),
@@ -49,19 +38,10 @@ def check_box_selection(mouse_pos:tuple[int, int], offsets:tuple[int, int], box_
         globals.board.set_selected(9, 9)
 
 
-def check_game(mouse_pos:tuple[int, int], buttons:list[Rect])->None:
-    if check_if_pressed(mouse_pos, buttons[0]):
-        globals.board.reset_to_original()
-    elif check_if_pressed(mouse_pos, buttons[1]):
-        end_game()
-    elif check_if_pressed(mouse_pos, buttons[2]):
-        exit()
-
-def check_finish(mouse_pos:tuple[int, int], buttons:list[Rect]):
-    if check_if_pressed(mouse_pos, buttons[0]):
-        exit()
-    elif check_if_pressed(mouse_pos, buttons[1]):
-        globals.state = globals.possible_states[0]
+def check_any(screen, mouse_pos:tuple[int, int], buttons:list[tuple]):
+    for element in buttons:
+        if check_if_pressed(mouse_pos, element[0]):
+            exec(element[1])
 
 
 def try_move_selected(pressed, selected):

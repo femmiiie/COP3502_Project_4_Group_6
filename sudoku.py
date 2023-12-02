@@ -28,13 +28,12 @@ def render_menu(screen:Surface, mouse_pos:tuple[int, int], current_event):
     exit_location : Rect = draw_button(screen, WINDOW_LENGTH_CENTER, 600, 30, "  Exit  ", WHITE, BUTTON_COLOR)
 
     if current_event.type == pygame.MOUSEBUTTONUP:
-        check_menu(screen, mouse_pos, [
-            easy_location,
-            medium_location,
-            hard_location,
-            exit_location
+        check_any(screen, mouse_pos, [
+            (easy_location, "start_game(30)"),
+            (medium_location, "start_game(40)"),
+            (hard_location, "start_game(50)"),
+            (exit_location, "exit()")
         ])
-            
 
 #Renders all Game Elements, Handles Game Logic, Etc.
 def render_game(screen: Surface, mouse_pos: tuple[int, int], current_event):
@@ -51,15 +50,18 @@ def render_game(screen: Surface, mouse_pos: tuple[int, int], current_event):
     exit_location = draw_button(screen, button_x_pos, WINDOW_HEIGHT_CENTER+100, 30, "   Exit   ", WHITE, BUTTON_COLOR)
 
     num_offsets = (offsets[0] - 1.2*box_size, offsets[1] + 10*box_size)
-    num_locations = [draw_button(screen, num_offsets[0] + i*1.3*box_size, num_offsets[1], 25, str(i), NUM_COLOR, NUM_BUTTON_COLOR) for i in range(10)]
+    num_locations = [
+        (draw_button(screen, num_offsets[0] + i*1.3*box_size, num_offsets[1], 25, str(i), NUM_COLOR, NUM_BUTTON_COLOR), )for i in range(10)
+         ]
     
     if current_event.type == pygame.MOUSEBUTTONUP:
         check_box_selection(mouse_pos, offsets, box_size)
-        check_game(mouse_pos, [
-            reset_location,
-            restart_location,
-            exit_location
+        check_any(screen, mouse_pos, [
+            (reset_location, "globals.board.reset_to_original()"),
+            (restart_location, "end_game()"),
+            (exit_location, "exit()")
         ])
+        #check_nums(mouse_pos, num_locations)
     elif current_event.type == pygame.KEYDOWN:
         
         pressed = pygame.key.get_pressed()
@@ -71,36 +73,24 @@ def render_game(screen: Surface, mouse_pos: tuple[int, int], current_event):
             try_submit_sketch(pressed, selected)
         
 
-def render_win(screen: Surface, mouse_pos: tuple[int, int], current_event):
+def render_end(screen: Surface, mouse_pos: tuple[int, int], current_event, win:bool):
     common_height = TITLE_FONT.get_rect("A").height
-    text = TITLE_FONT.render("WINNER!", BLACK)[0]
-    center_pos = (WINDOW_LENGTH_CENTER, 90 + common_height)
+    text = Surface
+    if win:
+        text = TITLE_FONT.render("WINNER!", BLACK)[0]
+    else:
+        text = TITLE_FONT.render("GAME OVER:(", BLACK)[0]
+    center_pos = (WINDOW_LENGTH_CENTER, 110 + common_height)
     screen.blit(text, text.get_rect(center=center_pos))
 
     exit_location = draw_button(screen, WINDOW_LENGTH_CENTER-100, 500, 30, "Exit", WHITE, BUTTON_COLOR)
     play_location = draw_button(screen, WINDOW_LENGTH_CENTER+100, 500, 30, "Play Again", WHITE, BUTTON_COLOR)
 
     if current_event.type == pygame.MOUSEBUTTONUP:
-        check_finish(mouse_pos, [
-            exit_location,
-            play_location
+        check_any(mouse_pos, [
+            (exit_location, "exit()"),
+            (play_location, "globals.state = globals.possible_states[0]")
         ])
-
-def render_loss(screen: Surface, mouse_pos: tuple[int, int], current_event):
-    common_height = TITLE_FONT.get_rect("A").height
-    text = TITLE_FONT.render("GAME OVER:(", BLACK)[0]
-    center_pos = (WINDOW_LENGTH_CENTER, 90 + common_height)
-    screen.blit(text, text.get_rect(center=center_pos))
-
-    exit_location = draw_button(screen, WINDOW_LENGTH_CENTER-100, 500, 30, "Exit", WHITE, BUTTON_COLOR)
-    play_location = draw_button(screen, WINDOW_LENGTH_CENTER+100, 500, 30, "Play Again", WHITE, BUTTON_COLOR)
-
-    if current_event.type == pygame.MOUSEBUTTONUP:
-        check_finish(mouse_pos, [
-            exit_location,
-            play_location
-        ])
-
 
 
 if __name__ == "__main__":
@@ -126,9 +116,9 @@ if __name__ == "__main__":
             case "game":
                 render_game(screen, mouse_pos, current_event)
             case "win":
-                render_win(screen, mouse_pos, current_event)
+                render_end(screen, mouse_pos, current_event, True)
             case "loss":
-                render_loss(screen, mouse_pos, current_event)
+                render_end(screen, mouse_pos, current_event, False)
             
 
         pygame.display.flip()
